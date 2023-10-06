@@ -1,8 +1,8 @@
-import button from "../styles/button.css";
+import {ButtonStyle} from "../styles/button-styles";
 
 function Button({ text, action }) {
     return (
-        <button className="button" onClick={action}>{text}</button>
+        <ButtonStyle className="button" onClick={action}>{text}</ButtonStyle>
     );
 }
 

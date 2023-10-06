@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./styles/App.css";
 import { addLog, clearLog, addPending, clearPending, removeActionFromQueue, addToQueue } from "./store/actions";
+import { AppSection, ButtonWrapper, LogParagraph, NumberParagraph, TimeList, TimeListEl } from "./styles/app-styles";
+import createGlobalStyle from "./styles/index"
 
 import Button from "./components/Button";
 
@@ -35,7 +36,7 @@ function App() {
             seconds,
             clickTime,
             logTime,
-            message: `Button N°${seconds}: ${logTime.toLocaleTimeString()} - ${clickTime.toLocaleTimeString()} (${passedTime} sec)`,
+            message: `Button N° ${seconds}:${clickTime.toLocaleTimeString()} -  ${logTime.toLocaleTimeString()} (${passedTime} sec)`,
         }));
         dispatch(removeActionFromQueue(seconds));
     };
@@ -49,31 +50,31 @@ function App() {
     };
 
     return (
-        <section className="App">
-            <div className={"App__button-wrapper"}>
+        <AppSection>
+            <ButtonWrapper>
                 <Button text={"1 sec"} action={() => handleClick(1)}/>
                 <Button text={"2 sec"} action={() => handleClick(2)}/>
                 <Button text={"3 sec"} action={() => handleClick(3)}/>
                 <Button text={"Clear"} action={handleClear}/>
-            </div>
+            </ButtonWrapper>
             <div>
                 <h2>Time</h2>
-                <ul className={"App__list"}>
+                <TimeList>
                     {logs.map((entry, index) => (
-                        <li className={"App__list-el"} key={index}>
-                            <p className={"App__number-paragraph"}>{index + 1}. </p>
-                            <p className={"App__log-paragraph"}>{entry.message}</p>
-                        </li>
+                        <TimeListEl className={"App__list-el"} key={index}>
+                            <NumberParagraph className={"App__number-paragraph"}>{index + 1}.</NumberParagraph>
+                            <LogParagraph>{entry.message}</LogParagraph>
+                        </TimeListEl>
                     ))}
                     {pending && (
-                        <li className={"App__list-el"}>
-                            <p className={"App__number-paragraph"}>{logs.length + 1}. </p>
-                            <p className={"App__log-paragraph"}>{pending.message}</p>
-                        </li>
+                        <TimeListEl className={"App__list-el"}>
+                            <NumberParagraph className={"App__number-paragraph"}>{logs.length + 1}.</NumberParagraph>
+                            <LogParagraph>{pending.message}</LogParagraph>
+                        </TimeListEl>
                     )}
-                </ul>
+                </TimeList>
             </div>
-        </section>
+        </AppSection>
     );
 }
 
